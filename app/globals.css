@@ -25,3 +25,12 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+input:focus {
+  outline: none;
+}
+
+::selection {
+  background-color: gray; /* Background color when text is selected */
+  color: white; /* Text color when text is selected */
+}
