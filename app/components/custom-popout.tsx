@@ -3,13 +3,21 @@ import React, {useState} from "react"
 import {Button} from "@nextui-org/button"
 import {Popover, PopoverTrigger, PopoverContent} from "@nextui-org/popover"
 import {NextUIProvider} from "@nextui-org/system"
+import {useUrlStore} from "../utils/url-store-type"
 
 export default function CustomPopout() {
   const [urlPath, setUrlPath] = useState("")
   const [filePath, setFilePath] = useState("")
+  const urlStore = useUrlStore() as {
+    urlPath: string
+    filePath: string
+    setUrlPath: (url: string) => void
+    setFilePath: (file: string) => void
+  }
 
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUrlPath(event.target.value)
+    const newUrl = event.target.value
+    setUrlPath(newUrl)
   }
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -18,6 +26,11 @@ export default function CustomPopout() {
       console.log("Selected file:", selectedFile)
       setFilePath(selectedFile.name)
     }
+  }
+
+  const handleSubmit = () => {
+    urlStore.setUrlPath(urlPath)
+    urlStore.setFilePath(filePath)
   }
 
   return (
@@ -53,7 +66,9 @@ export default function CustomPopout() {
                 onChange={handleFileUpload}
               />
             </div>
-            <Button className='bg-zinc-800 text-white'>Add Screen</Button>
+            <Button onClick={handleSubmit} className='bg-zinc-800 text-white'>
+              Add Screen
+            </Button>
             {filePath && <p>Selected file: {filePath}</p>}
           </div>
         </PopoverContent>
