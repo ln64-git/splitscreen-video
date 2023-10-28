@@ -34,7 +34,7 @@ export default function CustomPopout() {
     videoStore.addVideo(video)
   }
 
-  const inputRef = useRef<HTMLInputElement | null>(null) // Specify that inputRef can be null or an HTMLInputElement
+  const inputRef = useRef<HTMLInputElement | null>(null)
 
   return (
     <NextUIProvider>
@@ -59,10 +59,13 @@ export default function CustomPopout() {
                   value='remote'
                   onClick={() => setIsRemote(true)}
                   className='scale-75'
+                  key='remote-radio'
                 ></Radio>
                 <div>
-                  <div className='text-small font-bold'>Open from URL</div>
-                  <div className='text-tiny'>
+                  <div className='text-small font-bold' key='remote-label-bold'>
+                    Open from URL
+                  </div>
+                  <div className='text-tiny' key='remote-label-tiny'>
                     Connect to an existing video on the internet
                   </div>
                 </div>
@@ -78,33 +81,39 @@ export default function CustomPopout() {
                       handleSubmit()
                     }
                   }}
+                  key='url-input'
                 />
               ) : (
                 <input
                   className='text-tiny bg-zinc-800 p-1 m-1 rounded-md ml-8 opacity-40 pointer-events-none'
                   value={urlPath}
                   onChange={handleUrlChange}
+                  key='file-input'
                 />
               )}
-              <div className='flex '>
+              <div className='flex'>
                 <Radio
                   value='local'
                   onClick={() => setIsRemote(false)}
                   className='scale-75'
+                  key='local-radio'
                 ></Radio>
                 <div>
-                  <div className='text-small font-bold'>Open local file</div>
-                  <div className='text-tiny'>
-                    Upload a video from the device
+                  <div className='text-small font-bold' key='local-label-bold'>
+                    Open local file
+                  </div>
+                  <div className='text-tiny' key='local-label-tiny'>
+                    Upload a video from your device
                   </div>
                 </div>
               </div>
-              <div className='text-right p-2 '>
+              <div className='text-right p-2'>
                 {!isRemote ? (
                   <>
                     <label
                       htmlFor='fileInput'
                       className='text-tiny bg-zinc-800 p-1 px-2 m-2 rounded-md'
+                      key='file-label'
                     >
                       Choose File
                     </label>
@@ -113,6 +122,7 @@ export default function CustomPopout() {
                       id='fileInput'
                       style={{display: "none"}}
                       onChange={handleFileUpload}
+                      key='file-input-hidden'
                     />
                   </>
                 ) : (
@@ -120,6 +130,7 @@ export default function CustomPopout() {
                     <label
                       htmlFor='fileInput'
                       className='text-tiny bg-zinc-800 p-1 px-2 m-2 rounded-md opacity-40 pointer-events-none'
+                      key='file-label-disabled'
                     >
                       Choose File
                     </label>
@@ -128,14 +139,21 @@ export default function CustomPopout() {
                       id='fileInput'
                       style={{display: "none"}}
                       onChange={handleFileUpload}
+                      key='file-input-disabled'
                     />
                   </>
                 )}
               </div>
-              <Button onClick={handleSubmit} className='bg-zinc-800 text-white'>
+              <Button
+                onClick={handleSubmit}
+                className='bg-zinc-800 text-white'
+                key='submit-button'
+              >
                 Add Screen
               </Button>
-              {filePath && <p>Selected file: {filePath.name}</p>}
+              {filePath && (
+                <p key='selected-file-text'>Selected file: {filePath.name}</p>
+              )}
             </div>
           </RadioGroup>
         </PopoverContent>

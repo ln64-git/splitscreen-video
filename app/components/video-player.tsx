@@ -1,10 +1,10 @@
 "use client"
 import React from "react"
-import {useVideoStore, Video} from "../utils/video-store" // Import the Video interface
+import {useVideoStore, Video} from "../utils/video-store"
 
 export default function VideoPlayer() {
   const videoStore = useVideoStore()
-  const firstVideo = videoStore.videos[0]
+
   function generateIframeSrc(video: Video) {
     if (video && video.isRemote) {
       return getYoutubeVideo(video.path)
@@ -14,28 +14,23 @@ export default function VideoPlayer() {
     return ""
   }
 
-  console.log(videoStore)
-  console.log(firstVideo)
-
   return (
-    <div>
-      <iframe
-        style={{
-          width: "100%",
-          height: "100%",
-          position: "absolute",
-          top: 0,
-          left: 0,
-        }}
-        src={generateIframeSrc(firstVideo)}
-        title='Video Player'
-        allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-      ></iframe>
+    <div className='w-full h-full absolute flex'>
+      {videoStore.videos.map((video, index) => (
+        <div key={index} className='w-full' style={{position: "relative"}}>
+          <iframe
+            src={generateIframeSrc(video)}
+            title={`Video Player ${index}`}
+            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+            style={{position: "absolute", width: "100%", height: "100%"}}
+          ></iframe>
+        </div>
+      ))}
     </div>
   )
 }
 
-function getYoutubeVideo(url: String | undefined) {
+function getYoutubeVideo(url: string | undefined) {
   const regex = /[?&]v=([^&]+)/
   const videoId = url?.match(regex)
   if (videoId) {
