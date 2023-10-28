@@ -1,5 +1,6 @@
 import {create} from "zustand"
-interface Video {
+
+export interface Video {
   isRemote: boolean
   path?: string
   file?: File

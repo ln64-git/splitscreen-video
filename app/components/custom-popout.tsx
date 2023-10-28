@@ -27,7 +27,7 @@ export default function CustomPopout() {
 
   const handleSubmit = () => {
     const video = {
-      isRemote: !isRemote,
+      isRemote: isRemote,
       path: urlPath,
       file: filePath,
     }

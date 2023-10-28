@@ -1,12 +1,21 @@
 "use client"
 import React from "react"
-import {useVideoStore} from "../utils/video-store"
+import {useVideoStore, Video} from "../utils/video-store" // Import the Video interface
 
 export default function VideoPlayer() {
   const videoStore = useVideoStore()
-  console.log(videoStore.videos)
+  const firstVideo = videoStore.videos[0]
+  function generateIframeSrc(video: Video) {
+    if (video && video.isRemote) {
+      return getYoutubeVideo(video.path)
+    } else if (video && video.file) {
+      return URL.createObjectURL(video.file)
+    }
+    return ""
+  }
 
-  // const videoId = getYoutubeVideo(urlPath)
+  console.log(videoStore)
+  console.log(firstVideo)
 
   return (
     <div>
@@ -18,20 +27,20 @@ export default function VideoPlayer() {
           top: 0,
           left: 0,
         }}
-        // src={videoPath}
-        title='YouTube Video'
+        src={generateIframeSrc(firstVideo)}
+        title='Video Player'
         allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
       ></iframe>
     </div>
   )
+}
 
-  function getYoutubeVideo(url: String) {
-    const regex = /[?&]v=([^&]+)/
-    const videoId = url.match(regex)
-    if (videoId) {
-      return "https://www.youtube.com/embed/" + videoId[1]
-    } else {
-      return ""
-    }
+function getYoutubeVideo(url: String | undefined) {
+  const regex = /[?&]v=([^&]+)/
+  const videoId = url?.match(regex)
+  if (videoId) {
+    return "https://www.youtube.com/embed/" + videoId[1]
+  } else {
+    return ""
   }
 }
