@@ -1,6 +1,6 @@
+import CustomPopout from "@/components/custom-popout"
+import VideoPlayer from "@/components/video-player"
 import React from "react"
-import CustomPopout from "./components/custom-popout"
-import VideoPlayer from "./components/video-player"
 
 export default function Home() {
   return (
