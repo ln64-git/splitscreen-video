@@ -32,6 +32,8 @@ export default function CustomPopout() {
       file: filePath,
     }
     videoStore.addVideo(video)
+    setUrlPath("")
+    setFilePath(undefined)
   }
 
   const inputRef = useRef<HTMLInputElement | null>(null)

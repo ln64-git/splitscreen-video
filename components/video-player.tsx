@@ -14,28 +14,41 @@ export default function VideoPlayer() {
     return ""
   }
 
+  function getYoutubeVideo(url: string | undefined) {
+    const regex = /[?&]v=([^&]+)/
+    const videoId = url?.match(regex)
+    if (videoId) {
+      return "https://www.youtube.com/embed/" + videoId[1]
+    } else {
+      return ""
+    }
+  }
+
+  const splitScreen = (videosArray: Video[]) => {
+    const columns = Math.ceil(Math.sqrt(videosArray.length))
+    return (
+      <div className='w-full h-full absolute flex flex-wrap'>
+        {videosArray.map((video: Video, index: number) => (
+          <div
+            key={index}
+            className='relative flex-1'
+            style={{flexBasis: `calc(${100 / columns}%)`}}
+          >
+            <iframe
+              src={generateIframeSrc(video)}
+              title={`Video Player ${index}`}
+              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+              className='w-full h-full'
+            ></iframe>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
   return (
-    <div className='w-full h-full absolute flex'>
-      {videoStore.videos.map((video, index) => (
-        <div key={index} className='w-full' style={{position: "relative"}}>
-          <iframe
-            src={generateIframeSrc(video)}
-            title={`Video Player ${index}`}
-            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-            style={{position: "absolute", width: "100%", height: "100%"}}
-          ></iframe>
-        </div>
-      ))}
+    <div className='w-full h-full absolute'>
+      {splitScreen(videoStore.videos)}
     </div>
   )
-}
-
-function getYoutubeVideo(url: string | undefined) {
-  const regex = /[?&]v=([^&]+)/
-  const videoId = url?.match(regex)
-  if (videoId) {
-    return "https://www.youtube.com/embed/" + videoId[1]
-  } else {
-    return ""
-  }
 }
