@@ -36,10 +36,24 @@ export default function CustomPopout() {
 
   useEffect(() => {
     if (popover) {
-      // controls.start({y: 0})
       inputRef.current?.focus()
     }
   }, [popover])
+
+  const [pasteUrlInit, setPasteUrlInit] = useState(false)
+  useEffect(() => {
+    if (popoverStore.urlCache !== "") {
+      console.log("urlPath before setting:", urlPath)
+      console.log("store path:", popoverStore.urlCache)
+      setUrlPath(popoverStore.urlCache)
+      setPasteUrlInit(true)
+    }
+  }, [popoverStore.urlCache])
+  useEffect(() => {
+    if (pasteUrlInit === true && urlPath !== "") {
+      handleSubmit()
+    }
+  }, [pasteUrlInit])
 
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUrlPath(event.target.value)
@@ -61,6 +75,7 @@ export default function CustomPopout() {
       file: filePath,
     }
     videoStore.addVideo(video)
+    console.log(urlPath)
     setUrlPath("")
     setFilePath(undefined)
     setPopover(false)
@@ -88,10 +103,7 @@ export default function CustomPopout() {
       <div className='fixed bottom-4 left-1/2 transform -translate-x-1/2 z-20'>
         <Popover placement='bottom' isOpen={popover} className='bg-zinc-900'>
           <PopoverTrigger>
-            <motion.div
-              initial={{y: 60}} // Initial position (offscreen)
-              animate={controls} // Animated position
-            >
+            <motion.div initial={{y: 60}} animate={controls}>
               <Button
                 onClick={() => setPopover(!popover)}
                 className='bg-zinc-950 text-white'

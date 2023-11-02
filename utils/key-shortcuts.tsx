@@ -15,7 +15,12 @@ const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = () => {
         "Ctrl+q": () => {
           popoverStore.togglePopover()
         },
-        "Ctrl+v": () => setOutput("Paste URL"),
+        "Ctrl+v": () => {
+          e.preventDefault()
+          navigator.clipboard.readText().then((clipboardData) => {
+            popoverStore.setUrlCache(clipboardData)
+          })
+        },
         "Ctrl+z": () => setOutput("Undo"),
         "Ctrl+y": () => setOutput("Redo"),
       }
