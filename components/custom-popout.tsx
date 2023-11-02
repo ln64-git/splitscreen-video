@@ -19,12 +19,24 @@ export default function CustomPopout() {
 
   useEffect(() => {
     if (popoverStore.isOpen !== popover) {
-      setPopover(popoverStore.isOpen)
+      if (popoverStore.isOpen === true) {
+        controls.start({y: 0})
+        const timeoutId = setTimeout(() => {
+          setPopover(popoverStore.isOpen)
+        }, 500)
+        return () => {
+          clearTimeout(timeoutId)
+        }
+      } else {
+        controls.start({y: 60})
+        setPopover(popoverStore.isOpen)
+      }
     }
   }, [popoverStore.isOpen])
 
   useEffect(() => {
     if (popover) {
+      // controls.start({y: 0})
       inputRef.current?.focus()
     }
   }, [popover])
@@ -51,18 +63,18 @@ export default function CustomPopout() {
     videoStore.addVideo(video)
     setUrlPath("")
     setFilePath(undefined)
-    setPopover(false) // Close the Popover after submission
+    setPopover(false)
   }
 
   const controls = useAnimation()
 
   const handleHover = () => {
-    controls.start({y: 0}) // Slide from the bottom
+    controls.start({y: 0})
   }
 
   const handleMouseLeave = () => {
     if (!popover) {
-      controls.start({y: 40}) // Slide back down
+      controls.start({y: 60})
     }
   }
 
