@@ -53,6 +53,7 @@ export default function CustomPopout() {
     if (pasteUrlInit === true && urlPath !== "") {
       handleSubmit()
     }
+    setPasteUrlInit(false)
   }, [pasteUrlInit])
 
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
