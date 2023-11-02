@@ -6,6 +6,7 @@ import {NextUIProvider} from "@nextui-org/system"
 import {RadioGroup, Radio} from "@nextui-org/radio"
 import {useVideoStore} from "../utils/video-store"
 import {usePopoverStore} from "@/utils/key-store"
+import {motion, useAnimation} from "framer-motion"
 
 export default function CustomPopout() {
   const [urlPath, setUrlPath] = useState("")
@@ -53,124 +54,155 @@ export default function CustomPopout() {
     setPopover(false) // Close the Popover after submission
   }
 
+  const controls = useAnimation()
+
+  const handleHover = () => {
+    controls.start({y: 0}) // Slide from the bottom
+  }
+
+  const handleMouseLeave = () => {
+    if (!popover) {
+      controls.start({y: 40}) // Slide back down
+    }
+  }
+
   return (
     <NextUIProvider>
-      <Popover placement='bottom' isOpen={popover} className='bg-zinc-900'>
-        <PopoverTrigger>
-          <Button
-            onClick={() => setPopover(!popover)}
-            className='bg-zinc-950 text-white'
-          >
-            +
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent>
-          <RadioGroup defaultValue='remote'>
-            <div className='px-1 py-2 flex flex-col justify-center'>
-              <div className='flex'>
-                <Radio
-                  value='remote'
-                  onClick={() => setIsRemote(true)}
-                  className='scale-75'
-                  key='remote-radio'
-                ></Radio>
-                <div>
-                  <div className='text-small font-bold' key='remote-label-bold'>
-                    Open from URL
-                  </div>
-                  <div className='text-tiny' key='remote-label-tiny'>
-                    Connect to an existing video on the internet
-                  </div>
-                </div>
-              </div>
-              {isRemote ? (
-                <input
-                  ref={inputRef}
-                  className='text-tiny bg-zinc-800 p-1 m-1 rounded-md ml-8'
-                  value={urlPath}
-                  onChange={handleUrlChange}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      handleSubmit()
-                    }
-                  }}
-                  key='url-input'
-                />
-              ) : (
-                <input
-                  className='text-tiny bg-zinc-800 p-1 m-1 rounded-md ml-8 opacity-40 pointer-events-none'
-                  value={urlPath}
-                  onChange={handleUrlChange}
-                  key='file-input'
-                />
-              )}
-              <div className='flex'>
-                <Radio
-                  value='local'
-                  onClick={() => setIsRemote(false)}
-                  className='scale-75'
-                  key='local-radio'
-                ></Radio>
-                <div>
-                  <div className='text-small font-bold' key='local-label-bold'>
-                    Open local file
-                  </div>
-                  <div className='text-tiny' key='local-label-tiny'>
-                    Upload a video from your device
-                  </div>
-                </div>
-              </div>
-              <div className='text-right p-2'>
-                {!isRemote ? (
-                  <>
-                    <label
-                      htmlFor='fileInput'
-                      className='text-tiny bg-zinc-800 p-1 px-2 m-2 rounded-md'
-                      key='file-label'
+      <div
+        className='w-1/2 h-1/4 fixed bottom-0 z-10 mx-auto left-0 right-0'
+        onMouseEnter={handleHover}
+        onMouseLeave={handleMouseLeave}
+      ></div>
+      <div className='fixed bottom-4 left-1/2 transform -translate-x-1/2 z-20'>
+        <Popover placement='bottom' isOpen={popover} className='bg-zinc-900'>
+          <PopoverTrigger>
+            <motion.div
+              initial={{y: 60}} // Initial position (offscreen)
+              animate={controls} // Animated position
+            >
+              <Button
+                onClick={() => setPopover(!popover)}
+                className='bg-zinc-950 text-white'
+                onMouseEnter={handleHover}
+              >
+                +
+              </Button>
+            </motion.div>
+          </PopoverTrigger>
+          <PopoverContent>
+            <RadioGroup defaultValue='remote'>
+              <div className='px-1 py-2 flex flex-col justify-center'>
+                <div className='flex'>
+                  <Radio
+                    value='remote'
+                    onClick={() => setIsRemote(true)}
+                    className='scale-75'
+                    key='remote-radio'
+                  ></Radio>
+                  <div>
+                    <div
+                      className='text-small font-bold'
+                      key='remote-label-bold'
                     >
-                      Choose File
-                    </label>
-                    <input
-                      type='file'
-                      id='fileInput'
-                      style={{display: "none"}}
-                      onChange={handleFileUpload}
-                      key='file-input-hidden'
-                    />
-                  </>
+                      Open from URL
+                    </div>
+                    <div className='text-tiny' key='remote-label-tiny'>
+                      Connect to an existing video on the internet
+                    </div>
+                  </div>
+                </div>
+                {isRemote ? (
+                  <input
+                    ref={inputRef}
+                    className='text-tiny bg-zinc-800 p-1 m-1 rounded-md ml-8'
+                    value={urlPath}
+                    onChange={handleUrlChange}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleSubmit()
+                      }
+                    }}
+                    key='url-input'
+                  />
                 ) : (
-                  <>
-                    <label
-                      htmlFor='fileInput'
-                      className='text-tiny bg-zinc-800 p-1 px-2 m-2 rounded-md opacity-40 pointer-events-none'
-                      key='file-label-disabled'
+                  <input
+                    className='text-tiny bg-zinc-800 p-1 m-1 rounded-md ml-8 opacity-40 pointer-events-none'
+                    value={urlPath}
+                    onChange={handleUrlChange}
+                    key='file-input'
+                  />
+                )}
+                <div className='flex'>
+                  <Radio
+                    value='local'
+                    onClick={() => setIsRemote(false)}
+                    className='scale-75'
+                    key='local-radio'
+                  ></Radio>
+                  <div>
+                    <div
+                      className='text-small font-bold'
+                      key='local-label-bold'
                     >
-                      Choose File
-                    </label>
-                    <input
-                      type='file'
-                      id='fileInput'
-                      style={{display: "none"}}
-                      onChange={handleFileUpload}
-                      key='file-input-disabled'
-                    />
-                  </>
+                      Open local file
+                    </div>
+                    <div className='text-tiny' key='local-label-tiny'>
+                      Upload a video from your device
+                    </div>
+                  </div>
+                </div>
+                <div className='text-right p-2'>
+                  {!isRemote ? (
+                    <>
+                      <label
+                        htmlFor='fileInput'
+                        className='text-tiny bg-zinc-800 p-1 px-2 m-2 rounded-md'
+                        key='file-label'
+                      >
+                        Choose File
+                      </label>
+                      <input
+                        type='file'
+                        id='fileInput'
+                        style={{display: "none"}}
+                        onChange={handleFileUpload}
+                        key='file-input-hidden'
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <label
+                        htmlFor='fileInput'
+                        className='text-tiny bg-zinc-800 p-1 px-2 m-2 rounded-md opacity-40 pointer-events-none'
+                        key='file-label-disabled'
+                      >
+                        Choose File
+                      </label>
+                      <input
+                        type='file'
+                        id='fileInput'
+                        style={{display: "none"}}
+                        onChange={handleFileUpload}
+                        key='file-input-disabled'
+                      />
+                    </>
+                  )}
+                </div>
+                <Button
+                  onClick={handleSubmit}
+                  className='bg-zinc-800 text-white'
+                  key='submit-button'
+                >
+                  Add Screen
+                </Button>
+                {filePath && (
+                  <p key='selected-file-text'>Selected file: {filePath.name}</p>
                 )}
               </div>
-              <Button
-                onClick={handleSubmit}
-                className='bg-zinc-800 text-white'
-                key='submit-button'
-              >
-                Add Screen
-              </Button>
-              {filePath && (
-                <p key='selected-file-text'>Selected file: {filePath.name}</p>
-              )}
-            </div>
-          </RadioGroup>
-        </PopoverContent>
-      </Popover>
+            </RadioGroup>
+          </PopoverContent>
+        </Popover>
+      </div>
     </NextUIProvider>
   )
 }
