@@ -1,29 +1,45 @@
 "use client"
-import React, {useState, useRef} from "react"
+import React, {useState, useRef, useEffect} from "react"
 import {Button} from "@nextui-org/button"
 import {Popover, PopoverTrigger, PopoverContent} from "@nextui-org/popover"
 import {NextUIProvider} from "@nextui-org/system"
 import {RadioGroup, Radio} from "@nextui-org/radio"
 import {useVideoStore} from "../utils/video-store"
+import {usePopoverStore} from "@/utils/key-store"
 
 export default function CustomPopout() {
   const [urlPath, setUrlPath] = useState("")
-  const [filePath, setFilePath] = useState<File>()
+  const [filePath, setFilePath] = useState<File | undefined>()
   const [isRemote, setIsRemote] = useState(true)
+  const inputRef = useRef<HTMLInputElement | null>(null)
+  const [popover, setPopover] = useState(false)
 
-  const videoStore = useVideoStore()
+  const popoverStore = usePopoverStore()
+
+  useEffect(() => {
+    if (popoverStore.isOpen !== popover) {
+      setPopover(popoverStore.isOpen)
+    }
+  }, [popoverStore.isOpen])
+
+  useEffect(() => {
+    if (popover) {
+      inputRef.current?.focus()
+    }
+  }, [popover])
 
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newUrl = event.target.value
-    setUrlPath(newUrl)
+    setUrlPath(event.target.value)
   }
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files ? event.target.files[0] : null
+    const selectedFile = event.target.files ? event.target.files[0] : undefined
     if (selectedFile) {
       setFilePath(selectedFile)
     }
   }
+
+  const videoStore = useVideoStore()
 
   const handleSubmit = () => {
     const video = {
@@ -34,20 +50,15 @@ export default function CustomPopout() {
     videoStore.addVideo(video)
     setUrlPath("")
     setFilePath(undefined)
+    setPopover(false) // Close the Popover after submission
   }
-
-  const inputRef = useRef<HTMLInputElement | null>(null)
 
   return (
     <NextUIProvider>
-      <Popover placement='bottom' showArrow={true} className='bg-zinc-900'>
+      <Popover placement='bottom' isOpen={popover} className='bg-zinc-900'>
         <PopoverTrigger>
           <Button
-            onClick={() => {
-              if (inputRef.current) {
-                inputRef.current.focus()
-              }
-            }}
+            onClick={() => setPopover(!popover)}
             className='bg-zinc-950 text-white'
           >
             +

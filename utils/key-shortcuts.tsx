@@ -1,34 +1,33 @@
 "use client"
 import React, {useEffect, useState} from "react"
+import {usePopoverStore} from "./key-store"
 
 interface KeyboardShortcutsProps {}
 
 const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = () => {
-  const [output, setOutput] = useState<string>(
-    "Hello, I am a component that listens to keydown and keyup of a"
-  )
+  const [output, setOutput] = useState<string>("")
+
+  const popoverStore = usePopoverStore()
 
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const keyName = e.key
-      console.log("test:onKeyDown", keyName, e)
-      setOutput(`onKeyDown ${keyName}`)
+    const handleKeyboardShortcut = (e: KeyboardEvent) => {
+      const shortcuts: {[key: string]: () => void} = {
+        "Ctrl+q": () => {
+          popoverStore.togglePopover()
+        },
+        "Ctrl+v": () => setOutput("Paste URL"),
+        "Ctrl+z": () => setOutput("Undo"),
+        "Ctrl+y": () => setOutput("Redo"),
+      }
+      const keyCombination = (e.ctrlKey ? "Ctrl+" : "") + e.key
+      const action = shortcuts[keyCombination]
+      if (action) {
+        action()
+      }
     }
-
-    const handleKeyUp = (e: KeyboardEvent) => {
-      const keyName = e.key
-      console.log("test:onKeyUp", keyName)
-      setOutput(`onKeyUp ${keyName}`)
-    }
-
-    // Attach event listeners to the window object
-    window.addEventListener("keydown", handleKeyDown)
-    window.addEventListener("keyup", handleKeyUp)
-
+    window.addEventListener("keydown", handleKeyboardShortcut)
     return () => {
-      // Remove the event listeners when the component unmounts
-      window.removeEventListener("keydown", handleKeyDown)
-      window.removeEventListener("keyup", handleKeyUp)
+      window.removeEventListener("keydown", handleKeyboardShortcut)
     }
   }, [])
 
