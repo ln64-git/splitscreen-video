@@ -1,5 +1,6 @@
 import CustomPopout from "@/components/custom-popout"
 import VideoPlayer from "@/components/video-player"
+import KeyboardShortcuts from "@/utils/key-shortcuts"
 import React from "react"
 
 export default function Home() {
@@ -12,6 +13,7 @@ export default function Home() {
       <div className='fixed bottom-4 left-1/2 transform -translate-x-1/2'>
         <CustomPopout />
       </div>
+      <KeyboardShortcuts />
     </div>
   )
 }
