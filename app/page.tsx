@@ -13,7 +13,6 @@ export default function Home() {
       <div className=''>
         <CustomPopout />
       </div>
-      <KeyboardShortcuts />
     </div>
   )
 }

@@ -18,7 +18,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: rgb(19, 19, 23);
+  background: #0a0a0c;
 }
 
 input:focus {

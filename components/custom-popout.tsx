@@ -7,6 +7,7 @@ import {RadioGroup, Radio} from "@nextui-org/radio"
 import {useVideoStore} from "../utils/video-store"
 import {usePopoverStore} from "@/utils/key-store"
 import {motion, useAnimation} from "framer-motion"
+import KeyboardShortcuts from "@/utils/key-shortcuts"
 
 export default function CustomPopout() {
   const [urlPath, setUrlPath] = useState("")
@@ -96,6 +97,7 @@ export default function CustomPopout() {
 
   return (
     <NextUIProvider>
+      <KeyboardShortcuts popover={popover} />
       <div
         className='w-1/2 h-1/4 fixed bottom-0 z-10 mx-auto left-0 right-0'
         onMouseEnter={handleHover}
@@ -107,7 +109,7 @@ export default function CustomPopout() {
             <motion.div initial={{y: 60}} animate={controls}>
               <Button
                 onClick={() => setPopover(!popover)}
-                className='bg-zinc-950 text-white'
+                className='bg-zinc-900 text-white'
                 onMouseEnter={handleHover}
               >
                 +
