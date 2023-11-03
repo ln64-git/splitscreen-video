@@ -1,9 +1,14 @@
 "use client"
-import React from "react"
+import React, {useEffect, useState} from "react"
 import {useVideoStore, Video} from "../utils/video-store"
 
 export default function VideoPlayer() {
+  const [localVideos, setLocalVideos] = useState<Video[]>([])
   const videoStore = useVideoStore()
+
+  useEffect(() => {
+    setLocalVideos(videoStore.videos)
+  }, [videoStore.videos])
 
   function generateIframeSrc(video: Video) {
     if (video && video.isRemote) {
@@ -47,8 +52,6 @@ export default function VideoPlayer() {
   }
 
   return (
-    <div className='w-full h-full absolute'>
-      {splitScreen(videoStore.videos)}
-    </div>
+    <div className='w-full h-full absolute'>{splitScreen(localVideos)}</div>
   )
 }

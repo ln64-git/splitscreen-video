@@ -44,8 +44,6 @@ export default function CustomPopout() {
   const [pasteUrlInit, setPasteUrlInit] = useState(false)
   useEffect(() => {
     if (popoverStore.urlCache !== "") {
-      console.log("urlPath before setting:", urlPath)
-      console.log("store path:", popoverStore.urlCache)
       setUrlPath(popoverStore.urlCache)
       setPasteUrlInit(true)
     }
@@ -77,7 +75,6 @@ export default function CustomPopout() {
       file: filePath,
     }
     videoStore.addVideo(video)
-    console.log(urlPath)
     setUrlPath("")
     setFilePath(undefined)
     setPopover(false)

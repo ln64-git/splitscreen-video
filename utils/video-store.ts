@@ -8,22 +8,42 @@ export interface Video {
 
 export type VideoStore = {
   videos: Array<Video>
+  usedVideos: Array<Video>
   addVideo: (video: Video) => void
-  removeVideo: (video: Video) => void
   popLastVideo: () => void
+  restoreLastVideo: () => void
   clearVideos: () => void
 }
 
 export const useVideoStore = create<VideoStore>((set) => ({
   videos: [],
-  addVideo: (video) => set((state) => ({videos: [...state.videos, video]})),
-  removeVideo: (video) =>
+  usedVideos: [],
+  addVideo: (video) =>
     set((state) => ({
-      videos: state.videos.filter((v) => v !== video),
+      videos: [...state.videos, video],
+      usedVideos: [...state.usedVideos, video],
     })),
   popLastVideo: () =>
-    set((state) => ({
-      videos: state.videos.slice(0, -1),
-    })),
-  clearVideos: () => set({videos: []}),
+    set((state) => {
+      if (state.videos.length === 0) return state
+      const lastVideo = state.videos[state.videos.length - 1]
+      return {
+        videos: state.videos.slice(0, -1),
+        usedVideos: [...state.usedVideos, lastVideo],
+      }
+    }),
+  restoreLastVideo: () =>
+    set((state) => {
+      if (state.usedVideos.length === 0) return state
+      const lastUsedVideo = state.usedVideos[state.usedVideos.length - 1]
+      return {
+        videos: [...state.videos, lastUsedVideo],
+        usedVideos: state.usedVideos.slice(0, -1),
+      }
+    }),
+  clearVideos: () =>
+    set({
+      videos: [],
+      usedVideos: [],
+    }),
 }))

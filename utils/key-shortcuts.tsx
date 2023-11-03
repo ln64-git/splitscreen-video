@@ -32,7 +32,9 @@ const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = ({popover}) => {
       shortcuts["Ctrl+z"] = () => {
         videoStore.popLastVideo()
       }
-      shortcuts["Ctrl+y"] = () => setOutput("Redo")
+      shortcuts["Ctrl+x"] = () => {
+        videoStore.restoreLastVideo()
+      }
       const keyCombination = (e.ctrlKey ? "Ctrl+" : "") + e.key
       const action = shortcuts[keyCombination]
       if (action) {
