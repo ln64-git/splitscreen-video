@@ -3,8 +3,8 @@ import {create} from "zustand"
 export type PopoverStore = {
   isOpen: boolean
   togglePopover: () => void
-  urlCache: string // URL cache property
-  setUrlCache: (url: string) => void // Corrected setUrlCache function
+  urlCache: string
+  setUrlCache: (url: string) => void
 }
 
 export const usePopoverStore = create<PopoverStore>((set) => ({

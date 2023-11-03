@@ -18,12 +18,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: rgb(19, 19, 23);
 }
 
 input:focus {
@@ -31,6 +26,6 @@ input:focus {
 }
 
 ::selection {
-  background-color: gray; /* Background color when text is selected */
-  color: white; /* Text color when text is selected */
+  background-color: gray;
+  color: white;
 }
