@@ -35,6 +35,9 @@ const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = ({popover}) => {
       shortcuts["Ctrl+x"] = () => {
         videoStore.restoreLastVideo()
       }
+      shortcuts["Ctrl+m"] = () => {
+        videoStore.setReadLocalFile(true)
+      }
       const keyCombination = (e.ctrlKey ? "Ctrl+" : "") + e.key
       const action = shortcuts[keyCombination]
       if (action) {

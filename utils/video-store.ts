@@ -13,6 +13,8 @@ export type VideoStore = {
   popLastVideo: () => void
   restoreLastVideo: () => void
   clearVideos: () => void
+  readLocalFile: boolean
+  setReadLocalFile: (readLocalFile: boolean) => void
 }
 
 export const useVideoStore = create<VideoStore>((set) => ({
@@ -45,5 +47,11 @@ export const useVideoStore = create<VideoStore>((set) => ({
     set({
       videos: [],
       usedVideos: [],
+    }),
+
+  readLocalFile: false,
+  setReadLocalFile: (readLocalFile: boolean) =>
+    set({
+      readLocalFile: readLocalFile,
     }),
 }))

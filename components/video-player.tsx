@@ -14,7 +14,8 @@ export default function VideoPlayer() {
     if (video && video.isRemote) {
       return getYoutubeVideo(video.path)
     } else if (video && video.file) {
-      return URL.createObjectURL(video.file)
+      // Use the video element for local files
+      return video.file && URL.createObjectURL(video.file)
     }
     return ""
   }
@@ -39,12 +40,21 @@ export default function VideoPlayer() {
             className='relative flex-1'
             style={{flexBasis: `calc(${100 / columns}%)`}}
           >
-            <iframe
-              src={generateIframeSrc(video)}
-              title={`Video Player ${index}`}
-              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-              className='w-full h-full'
-            ></iframe>
+            {video.isRemote ? (
+              <iframe
+                src={generateIframeSrc(video)}
+                title={`Video Player ${index}`}
+                allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                className='w-full h-full'
+              ></iframe>
+            ) : (
+              <video
+                src={generateIframeSrc(video)}
+                title={`Video Player ${index}`}
+                controls // Add controls for playback
+                className='w-full h-full'
+              ></video>
+            )}
           </div>
         ))}
       </div>

@@ -8,15 +8,20 @@ import {useVideoStore} from "../utils/video-store"
 import {usePopoverStore} from "@/utils/key-store"
 import {motion, useAnimation} from "framer-motion"
 import KeyboardShortcuts from "@/utils/key-shortcuts"
+import {read} from "fs"
 
 export default function CustomPopout() {
   const [urlPath, setUrlPath] = useState("")
   const [filePath, setFilePath] = useState<File | undefined>()
   const [isRemote, setIsRemote] = useState(true)
-  const inputRef = useRef<HTMLInputElement | null>(null)
   const [popover, setPopover] = useState(false)
 
   const popoverStore = usePopoverStore()
+  const videoStore = useVideoStore()
+
+  const controls = useAnimation()
+
+  const [pasteUrlInit, setPasteUrlInit] = useState(false)
 
   useEffect(() => {
     if (popoverStore.isOpen !== popover) {
@@ -33,7 +38,19 @@ export default function CustomPopout() {
         setPopover(popoverStore.isOpen)
       }
     }
-  }, [popoverStore.isOpen])
+  }, [popoverStore.isOpen, controls])
+
+  const inputRef = useRef<HTMLInputElement | null>(null)
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
+
+  useEffect(() => {
+    if (videoStore.readLocalFile === true && fileInputRef.current) {
+      setIsRemote(false)
+      fileInputRef.current.click()
+      videoStore.setReadLocalFile(false)
+      console.log("File selection window opened")
+    }
+  }, [videoStore.readLocalFile, fileInputRef])
 
   useEffect(() => {
     if (popover) {
@@ -41,19 +58,19 @@ export default function CustomPopout() {
     }
   }, [popover])
 
-  const [pasteUrlInit, setPasteUrlInit] = useState(false)
   useEffect(() => {
     if (popoverStore.urlCache !== "") {
       setUrlPath(popoverStore.urlCache)
       setPasteUrlInit(true)
     }
   }, [popoverStore.urlCache])
+
   useEffect(() => {
     if (pasteUrlInit === true && urlPath !== "") {
       handleSubmit()
     }
     setPasteUrlInit(false)
-  }, [pasteUrlInit])
+  }, [pasteUrlInit, urlPath])
 
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUrlPath(event.target.value)
@@ -66,8 +83,6 @@ export default function CustomPopout() {
     }
   }
 
-  const videoStore = useVideoStore()
-
   const handleSubmit = () => {
     const video = {
       isRemote: isRemote,
@@ -79,8 +94,6 @@ export default function CustomPopout() {
     setFilePath(undefined)
     setPopover(false)
   }
-
-  const controls = useAnimation()
 
   const handleHover = () => {
     controls.start({y: 0})
@@ -188,6 +201,7 @@ export default function CustomPopout() {
                       <input
                         type='file'
                         id='fileInput'
+                        ref={fileInputRef}
                         style={{display: "none"}}
                         onChange={handleFileUpload}
                         key='file-input-hidden'
@@ -205,6 +219,7 @@ export default function CustomPopout() {
                       <input
                         type='file'
                         id='fileInput'
+                        ref={fileInputRef}
                         style={{display: "none"}}
                         onChange={handleFileUpload}
                         key='file-input-disabled'
