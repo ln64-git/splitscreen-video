@@ -1,5 +1,5 @@
 "use client"
-import React, {useState, useRef, useEffect} from "react"
+import React, {useState, useRef, useEffect, useLayoutEffect} from "react"
 import {Button} from "@nextui-org/button"
 import {Popover, PopoverTrigger, PopoverContent} from "@nextui-org/popover"
 import {NextUIProvider} from "@nextui-org/system"
@@ -19,38 +19,26 @@ export default function CustomPopout() {
   const popoverStore = usePopoverStore()
   const videoStore = useVideoStore()
 
-  const controls = useAnimation()
+  const animationControl = useAnimation()
 
   const [pasteUrlInit, setPasteUrlInit] = useState(false)
 
   useEffect(() => {
     if (popoverStore.isOpen !== popover) {
       if (popoverStore.isOpen === true) {
-        controls.start({y: 0})
-        const timeoutId = setTimeout(() => {
+        animationControl.start({y: 0})
+        setTimeout(() => {
           setPopover(popoverStore.isOpen)
         }, 500)
-        return () => {
-          clearTimeout(timeoutId)
-        }
       } else {
-        controls.start({y: 60})
+        animationControl.start({y: 60})
         setPopover(popoverStore.isOpen)
       }
     }
-  }, [popoverStore.isOpen, controls])
+  }, [popoverStore.isOpen])
 
   const inputRef = useRef<HTMLInputElement | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
-
-  useEffect(() => {
-    if (videoStore.readLocalFile === true && fileInputRef.current) {
-      setIsRemote(false)
-      fileInputRef.current.click()
-      videoStore.setReadLocalFile(false)
-      console.log("File selection window opened")
-    }
-  }, [videoStore.readLocalFile, fileInputRef])
 
   useEffect(() => {
     if (popover) {
@@ -76,7 +64,7 @@ export default function CustomPopout() {
     setUrlPath(event.target.value)
   }
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files ? event.target.files[0] : undefined
     if (selectedFile) {
       setFilePath(selectedFile)
@@ -96,12 +84,12 @@ export default function CustomPopout() {
   }
 
   const handleHover = () => {
-    controls.start({y: 0})
+    animationControl.start({y: 0})
   }
 
   const handleMouseLeave = () => {
     if (!popover) {
-      controls.start({y: 60})
+      animationControl.start({y: 60})
     }
   }
 
@@ -116,7 +104,7 @@ export default function CustomPopout() {
       <div className='fixed bottom-4 left-1/2 transform -translate-x-1/2 z-20'>
         <Popover placement='bottom' isOpen={popover} className='bg-zinc-900'>
           <PopoverTrigger>
-            <motion.div initial={{y: 60}} animate={controls}>
+            <motion.div initial={{y: 60}} animate={animationControl}>
               <Button
                 onClick={() => setPopover(!popover)}
                 className='bg-zinc-900 text-white'
@@ -203,7 +191,7 @@ export default function CustomPopout() {
                         id='fileInput'
                         ref={fileInputRef}
                         style={{display: "none"}}
-                        onChange={handleFileUpload}
+                        onChange={handleFileChange}
                         key='file-input-hidden'
                       />
                     </>
@@ -221,7 +209,7 @@ export default function CustomPopout() {
                         id='fileInput'
                         ref={fileInputRef}
                         style={{display: "none"}}
-                        onChange={handleFileUpload}
+                        onChange={handleFileChange}
                         key='file-input-disabled'
                       />
                     </>
