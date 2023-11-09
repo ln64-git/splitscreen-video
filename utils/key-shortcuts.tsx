@@ -24,10 +24,23 @@ const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = ({popover}) => {
       shortcuts["Ctrl+q"] = () => {
         popoverStore.togglePopover()
       }
-      shortcuts["Ctrl+v"] = () => {
-        navigator.clipboard.readText().then((clipboardData) => {
-          popoverStore.setUrlCache(clipboardData)
-        })
+      shortcuts["Ctrl+v"] = async () => {
+        try {
+          const clipboardData = await navigator.clipboard.readText()
+          const urlRegex = /(?:https?:\/\/[^\s]+)|(?:youtube\.com[^\s]+)/g
+          const matches = clipboardData.match(urlRegex)
+          const uniqueUrls = Array.from(new Set(matches || []))
+          uniqueUrls.forEach((url) => {
+            const video = {
+              isRemote: true,
+              path: url,
+              file: undefined,
+            }
+            videoStore.addVideo(video)
+          })
+        } catch (error) {
+          console.error("Error reading clipboard data:", error)
+        }
       }
       shortcuts["Ctrl+z"] = () => {
         videoStore.popLastVideo()

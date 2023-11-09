@@ -20,8 +20,6 @@ export default function CustomPopout() {
 
   const animationControl = useAnimation()
 
-  const [pasteUrlInit, setPasteUrlInit] = useState(false)
-
   const inputRef = useRef<HTMLInputElement | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
 
@@ -44,19 +42,6 @@ export default function CustomPopout() {
       inputRef.current?.focus()
     }
   }, [popover])
-
-  useEffect(() => {
-    if (popoverStore.urlCache !== "") {
-      setUrlPath(popoverStore.urlCache)
-      setPasteUrlInit(true)
-    }
-  }, [popoverStore.urlCache])
-  useEffect(() => {
-    if (pasteUrlInit === true && urlPath !== "") {
-      handleSubmit()
-    }
-    setPasteUrlInit(false)
-  }, [pasteUrlInit, urlPath])
 
   const handleSubmit = () => {
     const video = {
