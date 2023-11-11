@@ -1,8 +1,6 @@
 import CustomPopout from "@/components/custom-popout"
 import SplashScreen from "@/components/splash-screen"
 import VideoPlayer from "@/components/video-player"
-import KeyboardShortcuts from "@/utils/key-shortcuts"
-import React from "react"
 
 export default function Home() {
   return (
@@ -11,9 +9,7 @@ export default function Home() {
         <SplashScreen />
       </div>
       <VideoPlayer />
-      <div className=''>
-        <CustomPopout />
-      </div>
+      <CustomPopout />
     </div>
   )
 }
