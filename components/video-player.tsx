@@ -40,21 +40,12 @@ export default function VideoPlayer() {
             className='relative flex-1'
             style={{flexBasis: `calc(${100 / columns}%)`}}
           >
-            {video.isRemote ? (
-              <iframe
-                src={generateIframeSrc(video)}
-                title={`Video Player ${index}`}
-                allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-                className='w-full h-full'
-              ></iframe>
-            ) : (
-              <video
-                src={generateIframeSrc(video)}
-                title={`Video Player ${index}`}
-                controls // Add controls for playback
-                className='w-full h-full'
-              ></video>
-            )}
+            <iframe
+              src={generateIframeSrc(video)}
+              title={`Video Player ${index}`}
+              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+              className='w-full h-full'
+            ></iframe>
           </div>
         ))}
       </div>

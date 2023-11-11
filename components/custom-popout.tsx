@@ -80,7 +80,7 @@ export default function CustomPopout() {
     <NextUIProvider>
       <KeyboardShortcuts popover={popover} />
       <div
-        className='w-1/2 h-1/4 fixed bottom-0 z-10 mx-auto left-0 right-0'
+        className='w-1/2 h-1/4 fixed bottom-0 z-10 mx-auto left-0 right-0 hoverPopup'
         onMouseEnter={handleHover}
         onMouseLeave={handleMouseLeave}
       ></div>
@@ -147,8 +147,8 @@ export default function CustomPopout() {
                       htmlFor='fileInput'
                       className={
                         isRemote
-                          ? "text-tiny bg-zinc-800 p-1 px-2 m-2 rounded-md"
-                          : "text-tiny bg-zinc-800 p-1 px-2 m-2 rounded-md opacity-40 pointer-events-none"
+                          ? "text-tiny bg-zinc-800 p-1 px-2 m-2 rounded-md opacity-40 pointer-events-none"
+                          : "text-tiny bg-zinc-800 p-1 px-2 m-2 rounded-md"
                       }
                     >
                       Choose File

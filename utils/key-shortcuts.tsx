@@ -46,7 +46,9 @@ const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = ({popover}) => {
         videoStore.popLastVideo()
       }
       shortcuts["Ctrl+x"] = () => {
-        videoStore.restoreLastVideo()
+        if (videoStore.usedVideos.length > 1) {
+          videoStore.restoreLastVideo()
+        }
       }
       shortcuts["Ctrl+m"] = () => {
         videoStore.setReadLocalFile(true)
