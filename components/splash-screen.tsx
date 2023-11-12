@@ -32,12 +32,22 @@ const BindingsChart = () => {
 }
 
 const SplashScreen = () => (
-  <div className='bg-zinc-900 text-zinc-300 mx-4 max-w-4xl w-full p-4 rounded-3xl'>
-    <div className='mb-4 mx-6'>
-      <Title />
-      <Summary />
+  <div>
+    <div className='flex flex-col items-center justify-center w-full pb-8'>
+      <img src='/Back-to-the-Future.gif' className='max-w-lg' alt='' />
+      <p className='text-zinc-300 italic text-4xl max-w-3xl font-light '>
+        "Art off. OK, I want channels 18, 24, 63, 109, 87 and the weather
+        channel." - <strong>Marty McFly</strong>
+      </p>
     </div>
-    <BindingsChart />
+
+    <div className='bg-zinc-900 text-zinc-300 mx-4 max-w-4xl  w-full p-4 rounded-3xl'>
+      <div className='mb-4 mx-6'>
+        <Title />
+        <Summary />
+      </div>
+      <BindingsChart />
+    </div>
   </div>
 )
 

@@ -5,7 +5,7 @@ import VideoPlayer from "@/components/video-player"
 export default function Home() {
   return (
     <div className='flex flex-col h-screen relative'>
-      <div className='flex-grow flex items-center justify-center'>
+      <div className='flex-grow flex items-center  justify-center'>
         <SplashScreen />
       </div>
       <VideoPlayer />
