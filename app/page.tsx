@@ -1,6 +1,7 @@
 import CustomPopout from "@/components/custom-popout"
 import SplashScreen from "@/components/splash-screen"
 import VideoPlayer from "@/components/video-player"
+import Fireflies from "@/components/fireflies/fireflies"
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       </div>
       <VideoPlayer />
       <CustomPopout />
+      <Fireflies />
     </div>
   )
 }

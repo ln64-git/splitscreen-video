@@ -1,0 +1,110 @@
+// sass-lint:disable at-rule-no-unknown, css-ruleorselectorexpected
+@use 'sass:math';
+/* eslint-disable */
+
+$quantity: 15;
+
+html,
+body {
+  height: 100%;
+}
+
+.firefly {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 0.4vw;
+  height: 0.4vw;
+  margin: -0.2vw 0 0 9.8vw;
+  animation: ease 10000s alternate infinite;
+  pointer-events: none;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transform-origin: -10vw;
+  }
+
+  &::before {
+    background: rgb(79, 209, 211);
+    opacity: 0.4;
+    animation: drift ease alternate infinite;
+  }
+
+  &::after {
+    background: rgb(51, 194, 255);
+    opacity: 0;
+    box-shadow: 0 0 0vw 0vw rgb(118, 154, 239);
+    animation:
+      drift ease alternate infinite,
+      flash ease infinite;
+  }
+}
+
+// Randomize Fireflies Motion
+@for $i from 1 through $quantity {
+  $steps: random(12) + 16;
+  $rotationSpeed: random(10) + 8s;
+
+  .firefly:nth-child(#{$i}) {
+    animation-name: move#{$i};
+
+    &::before {
+      animation-duration: #{$rotationSpeed};
+    }
+
+    &::after {
+      animation-duration: #{$rotationSpeed},
+      random(6000)+5000ms;
+      animation-delay:
+        0ms,
+        random(8000) + 500ms;
+    }
+  }
+
+  @keyframes move#{$i} {
+    @for $step from 0 through $steps {
+      $percentage: math.div($step * 100, $steps); // Use math.div() here
+      $translateX: random(100) - 50vw;
+      $translateY: random(100) - 50vh;
+      $scale: calc(random(75) / 100 + .75); // Use calc() here
+
+      #{$percentage}% {
+        transform: translateX(#{$translateX}) translateY(#{$translateY}) scale(#{$scale});
+      }
+    }
+  }
+
+
+
+  @keyframes drift {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes flash {
+
+    0%,
+    300%,
+    100% {
+      opacity: 0;
+      box-shadow: 0 0 0vw 0vw rgb(108, 170, 237);
+    }
+
+    5% {
+      opacity: 1;
+      box-shadow: 0 0 2vw 0.3vw rgb(124, 143, 250);
+    }
+  }
+}
+
+// sass-lint:enable at-rule-no-unknown, css-ruleorselectorexpected
