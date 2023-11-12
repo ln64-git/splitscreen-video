@@ -4,9 +4,9 @@ const Title = () => (
 
 const Summary = () => (
   <p className='text-2xl leading-9 '>
-    Lorem, ipsum dolor sit amet consectetur adipisicing elit. At quaerat
-    nesciunt iste molestias illum laudantium aut possimus quod, dicta dolorem
-    sint vel voluptatibus culpa eaque?
+    Utility application for viewing multiple media files in a responsive tiled
+    format, paste links inside window for direct use, paste multiple links for
+    an instantly responcive tiled content
   </p>
 )
 
