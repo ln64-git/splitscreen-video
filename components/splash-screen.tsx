@@ -36,7 +36,13 @@ const BindingsChart = () => {
 const SplashScreen = () => (
   <div>
     <div className='flex flex-col items-center justify-center w-full pb-8'>
-      <Image src='/Back-to-the-Future.gif' className='max-w-lg' alt='' />
+      <Image
+        src='/Back-to-the-Future.gif'
+        className='max-w-lg'
+        alt='Back to the Future'
+        width={600}
+        height={600}
+      />
       <p className='text-zinc-300 italic text-4xl max-w-3xl font-light '>
         {
           '"Art off. OK, I want channels 18, 24, 63, 109, 87 and the weather channel." - '

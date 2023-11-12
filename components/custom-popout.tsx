@@ -35,7 +35,7 @@ export default function CustomPopout() {
         setPopover(popoverStore.isOpen)
       }
     }
-  }, [popoverStore.isOpen])
+  }, [popoverStore.isOpen, animationControl, popover])
 
   useEffect(() => {
     if (popover) {
