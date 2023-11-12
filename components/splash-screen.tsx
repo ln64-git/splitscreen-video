@@ -1,14 +1,14 @@
 import Image from "next/image"
 
 const Title = () => (
-  <h1 className=' text-4xl py-4 font-bold'>Splitscreen Video</h1>
+  <h1 className='text-4xl py-4 font-bold'>Splitscreen Video</h1>
 )
 
 const Summary = () => (
   <p className='text-2xl leading-9 '>
     Utility application for viewing multiple media files in a responsive tiled
     format, paste links inside window for direct use, paste multiple links for
-    an instantly responcive tiled content
+    an instantly responsive tiled content
   </p>
 )
 
@@ -38,8 +38,10 @@ const SplashScreen = () => (
     <div className='flex flex-col items-center justify-center w-full pb-8'>
       <Image src='/Back-to-the-Future.gif' className='max-w-lg' alt='' />
       <p className='text-zinc-300 italic text-4xl max-w-3xl font-light '>
-        "Art off. OK, I want channels 18, 24, 63, 109, 87 and the weather
-        channel." - <strong>Marty McFly</strong>
+        {
+          '"Art off. OK, I want channels 18, 24, 63, 109, 87 and the weather channel." - '
+        }
+        <strong>Marty McFly</strong>
       </p>
     </div>
 
