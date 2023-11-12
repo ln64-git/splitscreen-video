@@ -1,5 +1,5 @@
 import Image from "next/image"
-import backToTheFuture from "/Back-to-the-Future.gif"
+import backToTheFuture from "../public/back-to-the-future.gif"
 
 const Title = () => (
   <h1 className='text-4xl py-4 font-bold'>Splitscreen Video</h1>
