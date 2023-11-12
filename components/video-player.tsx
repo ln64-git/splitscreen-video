@@ -14,7 +14,6 @@ export default function VideoPlayer() {
     if (video && video.isRemote) {
       return getYoutubeVideo(video.path)
     } else if (video && video.file) {
-      // Use the video element for local files
       return video.file && URL.createObjectURL(video.file)
     }
     return ""
