@@ -64,7 +64,7 @@ const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = ({popover}) => {
       window.removeEventListener("keydown", handleKeyboardShortcut)
     }
   }, [popover, popoverStore, videoStore])
-  return <div style={{padding: "50px"}}>{output}</div>
+  return <div>{output}</div>
 }
 
 export default KeyboardShortcuts

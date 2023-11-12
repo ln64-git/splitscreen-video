@@ -80,7 +80,7 @@ export default function CustomPopout() {
     <NextUIProvider>
       <KeyboardShortcuts popover={popover} />
       <div
-        className='w-1/2 h-1/4 fixed bottom-0 z-10 mx-auto left-0 right-0 hoverPopup'
+        className='w-1/2 h-1/4 fixed bottom-0 z-10 mx-auto left-0 right-0 '
         onMouseEnter={handleHover}
         onMouseLeave={handleMouseLeave}
       ></div>
