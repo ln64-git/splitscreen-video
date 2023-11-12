@@ -1,4 +1,5 @@
 import Image from "next/image"
+import backToTheFuture from "/Back-to-the-Future.gif"
 
 const Title = () => (
   <h1 className='text-4xl py-4 font-bold'>Splitscreen Video</h1>
@@ -37,7 +38,7 @@ const SplashScreen = () => (
   <div>
     <div className='flex flex-col items-center justify-center w-full pb-8'>
       <Image
-        src='/Back-to-the-Future.gif'
+        src={backToTheFuture}
         className='max-w-lg'
         alt='Back to the Future'
         width={600}
