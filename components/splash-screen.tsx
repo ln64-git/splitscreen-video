@@ -36,6 +36,14 @@ const BindingsChart = () => {
 
 const SplashScreen = () => (
   <div>
+    <div className='bg-zinc-900 text-zinc-300 mx-4 max-w-4xl  w-full p-4 rounded-3xl'>
+      <div className='mb-4 mx-6'>
+        <Title />
+        <Summary />
+      </div>
+      <BindingsChart />
+    </div>
+
     <div className='flex flex-col items-center justify-center w-full pb-8'>
       <Image
         src={backToTheFuture}
@@ -50,14 +58,6 @@ const SplashScreen = () => (
         }
         <strong>Marty McFly</strong>
       </p>
-    </div>
-
-    <div className='bg-zinc-900 text-zinc-300 mx-4 max-w-4xl  w-full p-4 rounded-3xl'>
-      <div className='mb-4 mx-6'>
-        <Title />
-        <Summary />
-      </div>
-      <BindingsChart />
     </div>
   </div>
 )
