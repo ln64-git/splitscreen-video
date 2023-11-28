@@ -1,5 +1,5 @@
 "use client"
-import React, {useEffect, useState} from "react"
+import React, {useEffect} from "react"
 import {usePopoverStore} from "./key-store"
 import {useVideoStore} from "./video-store"
 
@@ -15,13 +15,18 @@ const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = ({popover}) => {
     const handleKeyboardShortcut = (e: KeyboardEvent) => {
       const shortcuts: {[key: string]: () => void} = {}
       if (popover) {
-        if (e.key === "v" && e.ctrlKey) {
+        if (e.ctrlKey && e.key === "v") {
           return
         }
       }
       shortcuts["Ctrl+q"] = () => {
         popoverStore.togglePopover()
       }
+      shortcuts["Ctrl+e"] = () => {
+        e.preventDefault()
+        popoverStore.togglePopover()
+      }
+
       shortcuts["Ctrl+v"] = async () => {
         try {
           const clipboardData = await navigator.clipboard.readText()

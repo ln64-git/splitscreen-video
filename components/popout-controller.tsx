@@ -7,7 +7,7 @@ import {useVideoStore} from "../utils/video-store"
 import {usePopoverStore} from "@/utils/key-store"
 import {motion, useAnimation} from "framer-motion"
 import KeyboardShortcuts from "@/utils/key-shortcuts"
-import CustomPopoverContent from "./popout-controller-content"
+import PopoverControllerContent from "./popout-controller-content"
 
 export default function PopoutController() {
   const [urlPath, setUrlPath] = useState("")
@@ -24,7 +24,7 @@ export default function PopoutController() {
   const fileInputRef = useRef<HTMLInputElement | null>(null)
 
   useEffect(() => {
-    if (popoverStore.isOpen === popover) {
+    if (popoverStore.isOpen !== popover) {
       if (popoverStore.isOpen === true) {
         animationControl.start({y: 0})
         setTimeout(() => {
@@ -89,7 +89,7 @@ export default function PopoutController() {
           <PopoverTrigger>
             <motion.div initial={{y: 60}} animate={animationControl}>
               <Button
-                onClick={() => setPopover(!popover)}
+                onClick={() => popoverStore.togglePopover()}
                 className='bg-zinc-900 text-white'
                 onMouseEnter={handleHover}
               >
@@ -98,7 +98,7 @@ export default function PopoutController() {
             </motion.div>
           </PopoverTrigger>
           <PopoverContent>
-            <CustomPopoverContent
+            <PopoverControllerContent
               isRemote={isRemote}
               setIsRemote={setIsRemote}
               handleSubmit={handleSubmit}

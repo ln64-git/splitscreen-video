@@ -50,7 +50,7 @@ export default function Home() {
             />
             <p className='text-zinc-300 italic text-4xl max-w-3xl font-light '>
               {
-                '"Art off. OK, I want channels 18, 24, 63, 109, 87 and the weather channel." - '
+                '"I want channels 18, 24, 63, 109, 87 and the weather channel." - '
               }
               <strong>Marty McFly</strong>
             </p>
