@@ -8,8 +8,6 @@ interface KeyboardShortcutsProps {
 }
 
 const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = ({popover}) => {
-  const [output, setOutput] = useState<string>("")
-
   const popoverStore = usePopoverStore()
   const videoStore = useVideoStore()
 
@@ -64,7 +62,7 @@ const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = ({popover}) => {
       window.removeEventListener("keydown", handleKeyboardShortcut)
     }
   }, [popover, popoverStore, videoStore])
-  return <div>{output}</div>
+  return null
 }
 
 export default KeyboardShortcuts

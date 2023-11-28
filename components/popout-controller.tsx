@@ -7,9 +7,9 @@ import {useVideoStore} from "../utils/video-store"
 import {usePopoverStore} from "@/utils/key-store"
 import {motion, useAnimation} from "framer-motion"
 import KeyboardShortcuts from "@/utils/key-shortcuts"
-import CustomPopoverContent from "./custom-popout-content"
+import CustomPopoverContent from "./popout-controller-content"
 
-export default function CustomPopout() {
+export default function PopoutController() {
   const [urlPath, setUrlPath] = useState("")
   const [filePath, setFilePath] = useState<File | undefined>()
   const [isRemote, setIsRemote] = useState(true)
@@ -24,7 +24,7 @@ export default function CustomPopout() {
   const fileInputRef = useRef<HTMLInputElement | null>(null)
 
   useEffect(() => {
-    if (popoverStore.isOpen !== popover) {
+    if (popoverStore.isOpen === popover) {
       if (popoverStore.isOpen === true) {
         animationControl.start({y: 0})
         setTimeout(() => {
