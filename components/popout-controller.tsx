@@ -1,8 +1,8 @@
 "use client"
 import React, {useState, useRef, useEffect, useLayoutEffect} from "react"
-import {Button} from "@nextui-org/button"
-import {Popover, PopoverTrigger, PopoverContent} from "@nextui-org/popover"
-import {NextUIProvider} from "@nextui-org/system"
+import {Button} from "@nextui-org/react"
+import {Popover, PopoverTrigger, PopoverContent} from "@nextui-org/react"
+import {NextUIProvider} from "@nextui-org/react"
 import {useVideoStore} from "../utils/video-store"
 import {usePopoverStore} from "@/utils/key-store"
 import {motion, useAnimation} from "framer-motion"
@@ -80,11 +80,11 @@ export default function PopoutController() {
     <NextUIProvider>
       <KeyboardShortcuts popover={popover} />
       <div
-        className='w-1/2 h-1/4 fixed bottom-0 z-10 mx-auto left-0 right-0 '
+        className='fixed bottom-0 left-0 right-0 z-10 mx-auto h-1/4 w-1/2 '
         onMouseEnter={handleHover}
         onMouseLeave={handleMouseLeave}
       ></div>
-      <div className='fixed bottom-4 left-1/2 transform -translate-x-1/2 z-20'>
+      <div className='fixed bottom-4 left-1/2 z-20 -translate-x-1/2 transform'>
         <Popover placement='bottom' isOpen={popover} className='bg-zinc-900 '>
           <PopoverTrigger>
             <motion.div initial={{y: 60}} animate={animationControl}>

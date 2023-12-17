@@ -1,17 +1,17 @@
-import {Button} from "@nextui-org/button"
-import {Radio, RadioGroup} from "@nextui-org/radio"
-import React from "react"
+import { Button } from '@nextui-org/react';
+import { Radio, RadioGroup } from '@nextui-org/react';
+import React from 'react';
 
 interface PopoverContentProps {
-  isRemote: boolean
-  setIsRemote: React.Dispatch<React.SetStateAction<boolean>>
-  handleSubmit: () => void
-  filePath: File | undefined
-  fileInputRef: React.MutableRefObject<HTMLInputElement | null>
-  handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-  urlPath: string
-  inputRef: React.MutableRefObject<HTMLInputElement | null>
-  handleUrlChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+  isRemote: boolean;
+  setIsRemote: React.Dispatch<React.SetStateAction<boolean>>;
+  handleSubmit: () => void;
+  filePath: File | undefined;
+  fileInputRef: React.MutableRefObject<HTMLInputElement | null>;
+  handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  urlPath: string;
+  inputRef: React.MutableRefObject<HTMLInputElement | null>;
+  handleUrlChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const CustomPopoverContent: React.FC<PopoverContentProps> = ({
@@ -28,84 +28,84 @@ const CustomPopoverContent: React.FC<PopoverContentProps> = ({
   const FileInput = () => (
     <>
       <label
-        htmlFor='fileInput'
+        htmlFor="fileInput"
         className={
           isRemote
-            ? "text-tiny bg-zinc-800 p-1 px-2 m-2 rounded-md opacity-40 pointer-events-none"
-            : "text-tiny bg-zinc-800 p-1 px-2 m-2 rounded-md"
+            ? 'pointer-events-none m-2 rounded-md dark p-1 px-2 text-tiny opacity-40'
+            : 'm-2 rounded-md dark p-1 px-2 text-tiny'
         }
       >
         Choose File
       </label>
       <input
-        type='file'
-        id='fileInput'
+        type="file"
+        id="fileInput"
         ref={fileInputRef}
-        className='hidden'
+        className="hidden"
         onChange={handleFileChange}
       />
     </>
-  )
+  );
   const UrlInput = () => (
     <input
       ref={inputRef}
       className={
         isRemote
-          ? "text-tiny bg-zinc-800 p-1 m-1 rounded-md ml-8"
-          : "text-tiny bg-zinc-800 p-1 m-1 rounded-md ml-8 opacity-40 pointer-events-none"
+          ? 'm-1 ml-8 rounded-md bg-zinc-800 p-1 text-tiny'
+          : 'pointer-events-none m-1 ml-8 rounded-md bg-zinc-800 p-1 text-tiny opacity-40'
       }
       value={urlPath}
       onChange={handleUrlChange}
       onKeyDown={(e) => {
-        if (e.key === "Enter") {
-          handleSubmit()
+        if (e.key === 'Enter') {
+          handleSubmit();
         }
       }}
     />
-  )
+  );
 
   return (
-    <RadioGroup defaultValue={isRemote ? "remote" : "local"}>
-      <div className='px-1 py-2 flex flex-col justify-center '>
-        <div className='flex'>
+    <RadioGroup defaultValue={isRemote ? 'remote' : 'local'}>
+      <div className="flex flex-col justify-center px-1 py-2 ">
+        <div className="flex">
           <Radio
-            value='remote'
+            value="remote"
             onClick={() => setIsRemote(true)}
-            className=''
+            className=""
           ></Radio>
-          <div className='mx-2'>
-            <div className='text-xl font-bold'>Open from URL</div>
-            <div className='text-md'>
+          <div className="mx-2">
+            <div className="text-xl font-bold">Open from URL</div>
+            <div className="text-md">
               Connect to an existing video on the internet
             </div>
           </div>
         </div>
         <UrlInput />
-        <div className='flex'>
+        <div className="flex">
           <Radio
-            value='local'
+            value="local"
             onClick={() => setIsRemote(false)}
-            className=''
+            className=""
           ></Radio>
-          <div className='mx-2'>
-            <div className='text-xl font-bold'>Open local file</div>
-            <div className='text-md' key='local-label-tiny'>
+          <div className="mx-2">
+            <div className="text-xl font-bold">Open local file</div>
+            <div className="text-md" key="local-label-tiny">
               Upload a video from your device
             </div>
           </div>
         </div>
-        <div className='text-right p-2'>
+        <div className="p-2 text-right">
           <FileInput />
         </div>
         <Button
           onClick={handleSubmit}
-          className='bg-zinc-800 text-white text-md'
+          className="text-md bg-zinc-800 text-white"
         >
           Add Screen
         </Button>
         {filePath && <p>Selected file: {filePath.name}</p>}
       </div>
     </RadioGroup>
-  )
-}
-export default CustomPopoverContent
+  );
+};
+export default CustomPopoverContent;

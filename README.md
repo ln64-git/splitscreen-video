@@ -1,37 +1,36 @@
-<a name="readme-top"></a>
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-<br />
-<div align="center">
-  <h3 align="center">Splitscreen Video Player</h3>
+## Getting Started
 
-  <p align="center">
-    Utility application for viewing multiple media files in a responsive tiled format
-    <br />
-    <br />
-    <a href="https://splitscreen-video.vercel.app/">View Demo</a>
-    ·
-    <a href="https://github.com/lucian1996/splitscreen-video/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/lucian1996/splitscreen-video/issues">Request Feature</a>
-  </p>
-</div>
+First, run the development server:
 
-## About
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-Splitscreen Video was designed to offer a remote solution for viewing an array of media files pulled from either a remote source or uploaded locally through the user's device. Designed for quick access and utility in mind, use keyboard shortcuts to open the pop out menu or paste in multiple videos at once for an instant tiled layout of content.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-**Features**:
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-- Minimally view content uploaded locally or pulled remote
-- Paste videos directly inside window for direct action
-- Ability to parse multiple links from the users clipboard for quick access to multiple videos at once
-- Launch pop out menu with Ctrl + Q to add new screen
-- Remove the latest video naturally with Ctrl + Z
-- Local cache storage for restoring removed videos with Ctrl + X
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-### Built With
+## Learn More
 
-[NextJS](https://nextjs.org/docs)<br>
-[NextUI](https://nextui.org/docs)<br>
-[FramerMotion](https://www.framer.com/motion/)<br>
-[Zustand](https://docs.pmnd.rs/zustand)<br>
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

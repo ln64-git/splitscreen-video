@@ -2,6 +2,7 @@
 import React, {useEffect} from "react"
 import {usePopoverStore} from "./key-store"
 import {useVideoStore} from "./video-store"
+import ScrapeWebsite from "@/components/scrape-website"
 
 interface KeyboardShortcutsProps {
   popover: boolean
@@ -28,6 +29,15 @@ const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = ({popover}) => {
       }
 
       shortcuts["Ctrl+v"] = async () => {
+        try {
+          const result = ScrapeWebsite()
+          console.log(result)
+        } catch (e) {
+          console.log(e)
+        }
+      }
+
+      shortcuts["Ctrl+b"] = async () => {
         try {
           const clipboardData = await navigator.clipboard.readText()
           const urlRegex = /(?:https?:\/\/[^\s]+)|(?:youtube\.com[^\s]+)/g

@@ -52,6 +52,8 @@ export default function VideoPlayer() {
   };
 
   return (
-    <div className="absolute h-full w-full">{splitScreen(localVideos)}</div>
+    <div className="absolute z-10 h-full w-full">
+      {splitScreen(localVideos)}
+    </div>
   );
 }
