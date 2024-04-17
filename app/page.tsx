@@ -3,7 +3,6 @@ import PopoutController from "@/components/popout-controller"
 import VideoPlayer from "@/components/video-player"
 import Fireflies from "@/components/fireflies/fireflies"
 import Image from "next/image"
-import backToTheFuture from "../public/back-to-the-future.gif"
 import ScrapeWebsite from "@/components/scrape-website"
 import {NextUIProvider} from "@nextui-org/react"
 
@@ -42,23 +41,6 @@ export default function Home() {
                 ))}
               </ul>
             </div>
-          </div>
-
-          <div className='flex w-full flex-col items-center justify-center pb-8'>
-            <Image
-              src={backToTheFuture}
-              className='max-w-lg'
-              alt='Back to the Future'
-              width={600}
-              height={600}
-              priority={true}
-            />
-            <p className='max-w-3xl text-4xl font-light italic text-zinc-300 '>
-              {
-                '"I want channels 18, 24, 63, 109, 87 and the weather channel." - '
-              }
-              <strong>Marty McFly</strong>
-            </p>
           </div>
         </div>
         <VideoPlayer />
