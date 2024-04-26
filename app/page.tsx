@@ -15,10 +15,9 @@ export default function Home() {
             <div className='mx-6 mb-4'>
               <h1 className='py-4 text-4xl font-bold'>Splitscreen Video</h1>
               <p className=' text-2xl leading-9'>
-                Utility application for viewing m ultiple media files in a
-                responsive tiled format, paste links inside window for direct
-                use, paste multiple links for an instantly responsive tiled
-                content
+                Responsive multi-screen media player, paste links inside window 
+                or hover over the bottom of the page for a pop up controller, paste multiple 
+                links for a recursive tiled format.
               </p>
             </div>
             <div className='m-auto max-w-3xl text-3xl'>
